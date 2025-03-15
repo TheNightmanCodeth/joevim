@@ -12,7 +12,7 @@
   ];
 
   plugins.neo-tree = {
-    enable = !config.plugins.yazi.enable;
+    enable = true;
 
     closeIfLastWindow = true;
 
