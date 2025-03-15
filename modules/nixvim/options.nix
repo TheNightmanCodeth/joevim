@@ -29,7 +29,12 @@
     colorizing_enabled = false;
     first_buffer_opened = false;
     whitespace_character_enabled = false;
-
+    # Don't open netrw file browser when opening a directory
+    loaded_netrwPlugin = true;
+    loaded_netrw = true;
+    loaded_netrwSettings = true;
+    loaded_netrwFileHandlers = true;
+    loaded_netrw_gitignore = true;
   };
 
   opts = {
