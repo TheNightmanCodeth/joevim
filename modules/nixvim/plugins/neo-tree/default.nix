@@ -17,7 +17,7 @@
     closeIfLastWindow = true;
 
     filesystem = {
-      hijackNetrwBehavior = "open_default";
+      hijackNetrwBehavior = "open_current";
 
       filteredItems = {
         hideDotfiles = false;
