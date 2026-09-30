@@ -1,5 +1,8 @@
 { config, lib, ... }:
 {
+  # Use neo-tree instead of the profile default (yazi)
+  khanelivim.editor.fileManager = "neo-tree";
+
   # TODO:https://github.com/GustavEikaas/easy-dotnet.nvim?tab=readme-ov-file#integrating-with-neo-tree
   plugins.neo-tree = {
     # neo-tree.nvim documentation

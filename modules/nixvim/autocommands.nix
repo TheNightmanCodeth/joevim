@@ -69,20 +69,19 @@
     # }
 
     # Open Neo-Tree on first buffer
-    # {
-    #   event = "BufWinEnter";
-    #   callback = {
-    #     __raw =
-    #       ''
-    #         function(table)
-    #           if vim.api.nvim_buf_get_name(0) ~= "" and not vim.g.first_buffer_opened then
-    #             vim.g.first_buffer_opened = true
-    #             vim.api.nvim_exec2('Neotree show filesystem left', { output = false })
-    #           end
-    #         end
-    #       '';
-    #   };
-    # }
+    {
+      event = "BufWinEnter";
+      callback = {
+        __raw = ''
+          function(table)
+            if vim.api.nvim_buf_get_name(0) ~= "" and not vim.g.first_buffer_opened then
+              vim.g.first_buffer_opened = true
+              vim.api.nvim_exec2('Neotree show filesystem left', { output = false })
+            end
+          end
+        '';
+      };
+    }
 
     # Enable spellcheck for some filetypes
     {
