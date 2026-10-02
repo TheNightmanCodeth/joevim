@@ -24,6 +24,9 @@
         "--completion-style=detailed"
         "--function-arg-placeholders"
         "--fallback-style=llvm"
+        # let clangd ask nix-store compilers (cross wrappers, e.g.
+        # arm64-apple-darwin20.4-clang) for their builtin includes and target
+        "--query-driver=/nix/store/*/bin/*"
       ];
     };
   };
