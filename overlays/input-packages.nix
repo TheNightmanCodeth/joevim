@@ -33,14 +33,10 @@ in
     };
   };
 
-  # Dormant until a Lua package needs a targeted override.
-  # luaPackages = prev.luaPackages // {
-  #   #
-  #   # Specific package overlays need to go in here to not get ignored
-  #   # Pull faster updates from nixpkgs-master with:
-  #   # inherit (masterLuaPackages) some-package;
-  #   #
-  # };
+  # nixpkgs moved top-level `luaPackages` into aliases.nix (2026-10-03), so it
+  # vanishes under allowAliases = false. nixvim's lint auto-install and our
+  # git-hooks still look it up; restore it as the alias did.
+  luaPackages = prev.lua55Packages;
 
   vimPlugins = prev.vimPlugins.extend (
     _self: super: {
