@@ -81,7 +81,9 @@ for _, sample in ipairs(sample_files) do
 	if ok then
 		vim.cmd("silent doautocmd <nomodeline> BufEnter")
 		vim.wait(150)
-		local bufnr = vim.api.nvim_get_current_buf()
+		-- Look up by path: autocmds (e.g. neo-tree on first buffer) may move
+		-- focus to another window, so the current buffer isn't reliable.
+		local bufnr = vim.fn.bufnr(full_path)
 		buffers[#buffers + 1] = {
 			bufnr = bufnr,
 			filetype = vim.bo[bufnr].filetype,
@@ -113,10 +115,14 @@ for _, mode in ipairs(modes) do
 end
 
 for _, buf in ipairs(buffers) do
-	for _, mode in ipairs(modes) do
-		for _, map in ipairs(vim.api.nvim_buf_get_keymap(buf.bufnr, mode)) do
-			payload.maps[#payload.maps + 1] = map_payload(mode, map, "buffer", buf.filetype)
+	if vim.api.nvim_buf_is_valid(buf.bufnr) then
+		for _, mode in ipairs(modes) do
+			for _, map in ipairs(vim.api.nvim_buf_get_keymap(buf.bufnr, mode)) do
+				payload.maps[#payload.maps + 1] = map_payload(mode, map, "buffer", buf.filetype)
+			end
 		end
+	else
+		payload.warnings[#payload.warnings + 1] = string.format("buffer for %s was wiped", buf.path)
 	end
 end
 
