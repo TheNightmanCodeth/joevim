@@ -1,4 +1,4 @@
-_: _final: prev: {
+_: final: prev: {
   # Dormant until a package needs updates ahead of nixpkgs-unstable. Take
   # `{ flake }:` again and bind these in a `let` to pull from nixpkgs-master:
   # nixpkgs-master-packages = import flake.inputs.nixpkgs-master {
@@ -38,6 +38,12 @@ _: _final: prev: {
       # Pull faster updates from nixpkgs-master with:
       # inherit (masterVimPlugins) some-plugin;
       #
+
+      # rustaceanvim's busted suite runs under nlua → our nightly neovim, and
+      # breaks on nightly API changes (219316f: "Invalid 'buf'", E95). Skip it.
+      rustaceanvim = final.neovimUtils.buildNeovimPlugin {
+        luaAttr = final.neovim-unwrapped.lua.pkgs.rustaceanvim.overrideAttrs { doCheck = false; };
+      };
 
       # inherit (masterVimPlugins) ts-comments-nvim;
       nvim-java = super.nvim-java.overrideAttrs {
